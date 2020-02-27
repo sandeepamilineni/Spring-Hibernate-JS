@@ -1,6 +1,10 @@
 package com.demo.mobilestore.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table
@@ -14,19 +18,15 @@ public class Category {
     @Column(name = "TYPE")
     private String categoryType;
 
-    @ManyToMany
-    private Mobile mobile;
-
-    public Mobile getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(Mobile mobile) {
-        this.mobile = mobile;
-    }
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "categories")
+    private Set<Mobile> mobiles = new HashSet<>();
 
 
     public Category(){}
+    public Category(String categoryType){
+        this.categoryType= categoryType;
+    }
 
     public Integer getCategoryId() {
         return categoryId;
@@ -42,5 +42,13 @@ public class Category {
 
     public void setCategoryType(String categoryType) {
         this.categoryType = categoryType;
+    }
+
+    public Set<Mobile> getMobiles() {
+        return mobiles;
+    }
+
+    public void setMobiles(Set<Mobile> mobiles) {
+        this.mobiles = mobiles;
     }
 }

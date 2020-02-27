@@ -1,5 +1,8 @@
 package com.demo.mobilestore.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,7 @@ public class Mobile {
     public Mobile(){}
 
     public List<Category> getCategories() {
-        return getCategories();
+        return this.categories;
     }
 
     public void addCategory(Category category){
@@ -36,11 +39,12 @@ public class Mobile {
         this.categories = categories;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "mobile_category",
             joinColumns = @JoinColumn(name = "mobile_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
+    @JsonBackReference
     private List<Category> categories = new ArrayList<>();
 
     public Integer getMobileId() {
