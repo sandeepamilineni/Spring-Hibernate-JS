@@ -3,32 +3,77 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <title>Mobile Store</title>
-
     <link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/shards.min.css">
 
 </head>
-
 <body>
-
 <main role="main" class="container">
-
     <div class="starter-template">
         <h1>Mobile Store</h1>
+
+
+
         <h2>
             <span th:text="'Hello, ' + ${message}"></span>
         </h2>
     </div>
 
-    <ol>
-        <li th:each="task : ${tasks}" th:text="${task}"></li>
-    </ol>
+    <a th:href="@{/mobile}" class="btn btn-primary">Show All Mobile</a>
+    <a th:href="@{/categories}" class="btn btn-primary">Show All Categories</a>
+    <a th:href="@{/add_mobile}" class="btn btn-primary">Add Mobile</a>
 
 </main>
-<!-- /.container -->
 
+<div class="container my-5">
+    <h2 class="mb-5">New User</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="#" th:action="@{/mobile}" th:object="${mobile}" method="post">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="mobileModel" class="col-form-label">Model</label>
+                        <input type="text" th:field="*{mobileModel}" class="form-control" id="mobileModel" placeholder="Name">
+                        <span th:if="${#fields.hasErrors('mobileModel')}" th:errors="*{mobileModel}" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="mobileBrand" class="col-form-label">Brand</label>
+                        <input type="text" th:field="*{mobileBrand}" class="form-control" id="mobileBrand" placeholder="Brand">
+                        <span th:if="${#fields.hasErrors('mobileBrand')}" th:errors="*{mobileBrand}" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="mobilePrice" class="col-form-label">Price</label>
+                        <input type="text" th:field="*{mobilePrice}" class="form-control" id="mobilePrice" placeholder="Price">
+                        <span th:if="${#fields.hasErrors('mobilePrice')}" th:errors="*{mobilePrice}" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-5">
+                        <input type="submit" class="btn btn-primary" value="Add Mobile">
+                    </div>
+                </div>
+            </form>
+            <form action="#" th:action="@{/category}" th:object="${category}" method="post">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="categoryType" class="col-form-label">Category Type</label>
+                        <input type="text" th:field="*{categoryType}" class="form-control" id="categoryType" placeholder="Type">
+                        <span th:if="${#fields.hasErrors('categoryType')}" th:errors="*{categoryType}" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-5">
+                        <input type="submit" class="btn btn-primary" value="Add Category">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
 </body>
 </html>

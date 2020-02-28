@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -27,25 +24,22 @@ public class MobileController {
     @Value("${welcome.message}")
     private String message;
 
-    private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
+    @ModelAttribute
+    public void addAttributes(Model model) {
+        model.addAttribute("mobile", new Mobile());
+        model.addAttribute("category", new Category());
+   }
 
     @GetMapping("/")
     public String main(Model model) {
         model.addAttribute("message", message);
-        model.addAttribute("tasks", tasks);
-
-        return "mobiles_display"; //view
+        return "mobiles_display";
     }
 
     @PostMapping(value="/mobile")
     @ResponseBody
-    public Mobile addMobile(){
-
+    public Mobile addMobile(Mobile mobile){
         Category category = categoryDao.findByCategoryType("5G");
-        Mobile mobile = new Mobile();
-        mobile.setMobileBrand("REALME");
-        mobile.setMobileModel("Model 3");
-        mobile.setMobilePrice(21212.55);
         mobile.addCategory(category);
         return iMobileDao.save(mobile);
     }
@@ -57,19 +51,21 @@ public class MobileController {
         return category.getMobiles();
     }
 
-
-    @PostMapping(value="/category")
+    @GetMapping("/categories")
     @ResponseBody
-    public Set<Category> addCategory(){
-        Set<Category> categories = new HashSet<>();
-
-        categories.add(new Category("5G"));
-        categories.add(new Category("BRAND"));
-        categories.add(new Category("TRIPLECAM"));
-
-        categoryDao.saveAll(categories);
+    public List<Category> getAllCategories(){
+        List<Category> categories = new ArrayList<>();
+        categoryDao.findAll().forEach(category->categories.add(category));
         return categories;
     }
+
+    @PostMapping(value="/category")
+    public String addCategory(@ModelAttribute Category category){
+        category = categoryDao.save(category);
+        return "mobiles_display";
+    }
+
+
 
 
 }
