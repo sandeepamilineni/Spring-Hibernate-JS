@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +25,18 @@ public class Mobile {
     @Column(name = "BRAND")
     private String mobileBrand;
 
+    //@Pattern(regexp="[\\d]{6}")
+    @NotEmpty(message = "{mobile.price.notempty}")
     @Column(name = "PRICE")
     private double mobilePrice;
+
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(name = "mobile_category",
+            joinColumns = @JoinColumn(name = "mobile_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    @JsonBackReference
+    private List<Category> categories = new ArrayList<>();
 
     public Mobile(){}
 
@@ -38,14 +51,6 @@ public class Mobile {
     public void setCategory(List<Category> categories) {
         this.categories = categories;
     }
-
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(name = "mobile_category",
-            joinColumns = @JoinColumn(name = "mobile_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    @JsonBackReference
-    private List<Category> categories = new ArrayList<>();
 
     public Integer getMobileId() {
         return mobileId;

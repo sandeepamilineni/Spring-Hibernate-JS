@@ -3,6 +3,8 @@ package com.demo.mobilestore.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ public class Category {
     @Column(name = "CATEGORY_ID")
     private Integer categoryId;
 
+    @NotEmpty(message = "{category.categoryyype.notempty}")
     @Column(name = "TYPE")
     private String categoryType;
 
@@ -22,8 +25,8 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private Set<Mobile> mobiles = new HashSet<>();
 
-
     public Category(){}
+
     public Category(String categoryType){
         this.categoryType= categoryType;
     }
