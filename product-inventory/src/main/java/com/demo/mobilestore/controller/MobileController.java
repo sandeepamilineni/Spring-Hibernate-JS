@@ -29,7 +29,10 @@ public class MobileController {
     public void addAttributes(Model model) {
         model.addAttribute("mobile", new Mobile());
         model.addAttribute("category", new Category());
-        model.addAttribute("categories", new ArrayList<>());
+        
+        List<Category> categories = new ArrayList<>();
+        categoryDao.findAll().forEach(category->categories.add(category));
+        model.addAttribute("allcategories", categories);
    }
 
     @GetMapping("/")
@@ -41,8 +44,6 @@ public class MobileController {
     @PostMapping(value="/mobile")
     @ResponseBody
     public Mobile addMobile(@Valid Mobile mobile){
-        Category category = categoryDao.findByCategoryType("5G");
-        mobile.addCategory(category);
         return iMobileDao.save(mobile);
     }
 
@@ -57,7 +58,7 @@ public class MobileController {
     public String getAllCategories(Model model){
         List<Category> categories = new ArrayList<>();
         categoryDao.findAll().forEach(category->categories.add(category));
-        model.addAttribute(categories);
+        model.addAttribute("categories",categories);
         return "mobiles_display";
     }
 

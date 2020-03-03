@@ -46,6 +46,16 @@
                         <input type="text" th:field="*{mobilePrice}" class="form-control" id="mobilePrice" placeholder="Price">
                         <span th:if="${#fields.hasErrors('mobilePrice')}" th:errors="*{mobilePrice}" class="text-danger"></span>
                     </div>
+                    <label for="categories">Mobile categories (multiple select):</label>
+			<br />
+			<select id="categories" th:field="*{categories}" size="10" multiple="multiple">
+				<option th:each="categoryselect : ${allcategories}"
+						th:value="${{categoryselect.categoryId}}"
+						th:text="${categoryselect.categoryType}">
+					Type
+				</option>
+			</select>
+			<br />
                 </div>
                 <div class="row">
                     <div class="col-md-6 mt-5">
@@ -69,11 +79,11 @@
             </form>
             <ol>
 <!--                <li th:each="category : ${categories}" th:text="${task}"></li>-->
-                <tr th:each="categoryItem: ${categories}">
+                <tr th:each="categoryItem: ${allcategories}">
                     <td th:text="${categoryItem.categoryType}" />
-<!--                <tr th:each="mobileItem: ${categoryItem?.mobiles}">-->
-<!--                    <td th:text="${mobileItem?.mobileModel}" />-->
-<!--                    <td th:text="${mobileItem?.mobileBrand}" />-->
+               <td th:each="mobileItem: ${categoryItem?.mobiles}">
+                   <td th:text="${mobileItem?.mobileModel}" />
+                   <td th:text="${mobileItem?.mobileBrand}" />
 
                 </tr>
             </ol>

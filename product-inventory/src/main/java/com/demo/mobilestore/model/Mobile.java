@@ -35,7 +35,7 @@ public class Mobile {
             joinColumns = @JoinColumn(name = "mobile_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    @JsonIgnore
+    
     private List<Category> categories = new ArrayList<>();
 
     public Mobile(){}

@@ -1,5 +1,6 @@
 package com.demo.mobilestore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Category {
     @Column(name = "TYPE")
     private String categoryType;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "categories")
     private Set<Mobile> mobiles = new HashSet<>();
 
@@ -30,27 +32,29 @@ public class Category {
         this.categoryType= categoryType;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
-    }
+	public Integer getCategoryId() {
+		return categoryId;
+	}
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
 
-    public String getCategoryType() {
-        return categoryType;
-    }
+	public String getCategoryType() {
+		return categoryType;
+	}
 
-    public void setCategoryType(String categoryType) {
-        this.categoryType = categoryType;
-    }
+	public void setCategoryType(String categoryType) {
+		this.categoryType = categoryType;
+	}
 
-    public Set<Mobile> getMobiles() {
-        return mobiles;
-    }
+	public Set<Mobile> getMobiles() {
+		return mobiles;
+	}
 
-    public void setMobiles(Set<Mobile> mobiles) {
-        this.mobiles = mobiles;
-    }
+	public void setMobiles(Set<Mobile> mobiles) {
+		this.mobiles = mobiles;
+	}
+
+  
 }
