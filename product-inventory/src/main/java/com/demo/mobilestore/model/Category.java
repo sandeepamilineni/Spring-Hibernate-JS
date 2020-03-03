@@ -21,7 +21,6 @@ public class Category {
     @Column(name = "TYPE")
     private String categoryType;
 
-    @JsonManagedReference
     @ManyToMany(mappedBy = "categories")
     private Set<Mobile> mobiles = new HashSet<>();
 

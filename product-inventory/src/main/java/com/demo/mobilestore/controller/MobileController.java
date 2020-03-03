@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.*;
 
 @Controller
@@ -27,6 +29,7 @@ public class MobileController {
     public void addAttributes(Model model) {
         model.addAttribute("mobile", new Mobile());
         model.addAttribute("category", new Category());
+        model.addAttribute("categories", new ArrayList<>());
    }
 
     @GetMapping("/")
@@ -37,7 +40,7 @@ public class MobileController {
 
     @PostMapping(value="/mobile")
     @ResponseBody
-    public Mobile addMobile(Mobile mobile){
+    public Mobile addMobile(@Valid Mobile mobile){
         Category category = categoryDao.findByCategoryType("5G");
         mobile.addCategory(category);
         return iMobileDao.save(mobile);
@@ -46,16 +49,16 @@ public class MobileController {
     @GetMapping(value="/mobile")
     @ResponseBody
     public Set<Mobile> getMobilesByCategory(){
-        Category category = categoryDao.findByCategoryType("5G");
+        Category category = categoryDao.findByCategoryType("4G");
         return category.getMobiles();
     }
 
     @GetMapping("/categories")
-    @ResponseBody
-    public List<Category> getAllCategories(){
+    public String getAllCategories(Model model){
         List<Category> categories = new ArrayList<>();
         categoryDao.findAll().forEach(category->categories.add(category));
-        return categories;
+        model.addAttribute(categories);
+        return "mobiles_display";
     }
 
     @PostMapping(value="/category")

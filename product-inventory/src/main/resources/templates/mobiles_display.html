@@ -67,6 +67,16 @@
                     </div>
                 </div>
             </form>
+            <ol>
+<!--                <li th:each="category : ${categories}" th:text="${task}"></li>-->
+                <tr th:each="categoryItem: ${categories}">
+                    <td th:text="${categoryItem.categoryType}" />
+<!--                <tr th:each="mobileItem: ${categoryItem?.mobiles}">-->
+<!--                    <td th:text="${mobileItem?.mobileModel}" />-->
+<!--                    <td th:text="${mobileItem?.mobileBrand}" />-->
+
+                </tr>
+            </ol>
         </div>
     </div>
 </div>

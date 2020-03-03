@@ -26,7 +26,7 @@ public class Mobile {
     private String mobileBrand;
 
     //@Pattern(regexp="[\\d]{6}")
-    @NotEmpty(message = "{mobile.price.notempty}")
+    //@NotEmpty(message = "{mobile.price.notempty}")
     @Column(name = "PRICE")
     private double mobilePrice;
 
@@ -35,7 +35,7 @@ public class Mobile {
             joinColumns = @JoinColumn(name = "mobile_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    @JsonBackReference
+    @JsonIgnore
     private List<Category> categories = new ArrayList<>();
 
     public Mobile(){}
