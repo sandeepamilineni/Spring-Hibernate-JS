@@ -17,12 +17,13 @@ public class Category {
     @GeneratedValue
     @Column(name = "CATEGORY_ID")
     private Integer categoryId;
+ 
 
-    @NotEmpty(message = "{category.categoryyype.notempty}")
+	@NotEmpty(message = "{category.categoryType.notempty}")
     @Column(name = "TYPE")
     private String categoryType;
 
-    @JsonIgnore
+    
     @ManyToMany(mappedBy = "categories")
     private Set<Mobile> mobiles = new HashSet<>();
 
@@ -56,5 +57,29 @@ public class Category {
 		this.mobiles = mobiles;
 	}
 
-  
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((categoryId == null) ? 0 : categoryId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Category other = (Category) obj;
+		if (categoryId == null) {
+			if (other.categoryId != null)
+				return false;
+		} else if (!categoryId.equals(other.categoryId))
+			return false;
+		return true;
+	}
+	
 }

@@ -2,11 +2,16 @@ package com.demo.mobilestore.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import net.bytebuddy.implementation.MethodAccessorFactory.AccessType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+
+import java.nio.file.AccessMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,16 +35,17 @@ public class Mobile {
     @Column(name = "PRICE")
     private double mobilePrice;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "mobile_category",
             joinColumns = @JoinColumn(name = "mobile_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    
     private List<Category> categories = new ArrayList<>();
 
     public Mobile(){}
 
+    @JsonIgnore
     public List<Category> getCategories() {
         return this.categories;
     }
@@ -83,4 +89,31 @@ public class Mobile {
     public void setMobilePrice(double mobilePrice) {
         this.mobilePrice = mobilePrice;
     }
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((mobileId == null) ? 0 : mobileId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Mobile other = (Mobile) obj;
+		if (mobileId == null) {
+			if (other.mobileId != null)
+				return false;
+		} else if (!mobileId.equals(other.mobileId))
+			return false;
+		return true;
+	}
+    
+    
 }

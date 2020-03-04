@@ -44,6 +44,12 @@ public class MobileController {
     @PostMapping(value="/mobile")
     @ResponseBody
     public Mobile addMobile(@Valid Mobile mobile){
+    	List<Category> c=mobile.getCategories();
+    	if(c==null || c.isEmpty() ) {
+            Category category = categoryDao.findByCategoryType("4G");
+
+        	mobile.addCategory(category);
+    	}
         return iMobileDao.save(mobile);
     }
 
