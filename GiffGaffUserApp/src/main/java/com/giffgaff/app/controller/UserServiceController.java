@@ -44,7 +44,7 @@ public class UserServiceController {
 	 * @param user
 	 * @return
 	 */
-	@PostMapping("/adduser")
+	@PostMapping("/user")
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public ResponseEntity<String> addUser(@RequestBody User user) {
 		User userObj = userService.addUser(user);
@@ -61,7 +61,7 @@ public class UserServiceController {
 	 * @param id
 	 * @return
 	 */
-	@DeleteMapping("/deleteuser/{id}")
+	@DeleteMapping("/user/{id}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public ResponseEntity<String> deleteById(@PathVariable Long id) {
 		userService.deleteById(id);
@@ -75,7 +75,7 @@ public class UserServiceController {
 	 * @param userid
 	 * @return
 	 */
-	@GetMapping("/getuser/{userid}")
+	@GetMapping("/user/{userid}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public Optional<User> getUser(@PathVariable Long userid) {
 		Optional<User> user;
@@ -85,7 +85,13 @@ public class UserServiceController {
 
 	}
 	
-	@GetMapping("/getlist")
+	/**
+	 * Get the user list from Database
+	 * 
+	 * @param userid
+	 * @return
+	 */
+	@GetMapping("/users")
 	public List<User> getListOfUsers(){
 		
 		List<User> listOfUsers = userService.getListOfUsers();
@@ -105,7 +111,7 @@ public class UserServiceController {
 	 * @param user
 	 * @return
 	 */
-	@PutMapping("/updateuser/{userid}")
+	@PutMapping("/user/{userid}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public ResponseEntity<String> updateUserById(@PathVariable("userid") Long userid, @RequestBody User user) {
 		user.setUserid(userid);
