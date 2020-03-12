@@ -25,6 +25,11 @@ public class ManufacturingMgmtController {
         return manufacturingMgmtService.addProduct(product);
     }
 
+    @GetMapping("/product")
+    public Product getProduct() {
+        return new Product();
+    }
+
     @GetMapping("/rawmaterial")
     public RawMaterial viewRawMaterials() {
         return new RawMaterial();
@@ -35,6 +40,14 @@ public class ManufacturingMgmtController {
        return  manufacturingMgmtService.getRawMaterials();
 
     }
+
+    @GetMapping("/products")
+    public List<Product> getProducts(){
+        return  manufacturingMgmtService.getProducts();
+    }
+
+    @PostMapping
+    public 
 
     @PutMapping("/rawmaterial/{id}")
     public RawMaterial updateRawMaterial(long id) {

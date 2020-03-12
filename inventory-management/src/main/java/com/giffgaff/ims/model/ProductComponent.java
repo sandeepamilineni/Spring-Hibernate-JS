@@ -1,7 +1,6 @@
 package com.giffgaff.ims.model;
 
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
 @Entity
@@ -24,7 +23,7 @@ public class ProductComponent{
     private int quantity;
 
     @ManyToOne()
-    @JoinColumn(name="prod_comp_id", insertable = false, updatable = false)
+    @JoinColumn(name="raw_material_id", insertable = false, updatable = false)
     private RawMaterial rawMaterial;
 
     public ProductComponent() {    }

@@ -9,6 +9,7 @@ import com.giffgaff.ims.service.ManufacturingMgmtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -32,5 +33,12 @@ public class ManufacturingMgmtServiceImpl implements ManufacturingMgmtService {
     @Override
     public Product addProduct(Product product) {
         return productDAO.save(product);
+    }
+
+    @Override
+    public List<Product> getProducts() {
+        List<Product> productList = new ArrayList<>();
+         productDAO.findAll().forEach(product->productList.add(product));
+        return productList;
     }
 }

@@ -31,6 +31,7 @@ public class Product {
 	@Column(name="prod_type")
 	private String productType;
 
+
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "prod_id")
 	private List<ProductComponent> productComponentList = new ArrayList<>();

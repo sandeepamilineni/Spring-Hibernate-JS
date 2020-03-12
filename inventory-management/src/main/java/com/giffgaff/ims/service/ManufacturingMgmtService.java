@@ -13,4 +13,6 @@ public interface ManufacturingMgmtService {
     List<RawMaterial> getRawMaterials();
 
     Product addProduct(Product product);
+
+    List<Product> getProducts();
 }
